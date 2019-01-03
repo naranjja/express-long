@@ -1,0 +1,25 @@
+{
+  "name": "express-long",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/naranjja/express-long.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/naranjja/express-long/issues"
+  },
+  "homepage": "https://github.com/naranjja/express-long#readme",
+  "dependencies": {
+    "amqplib": "^0.5.3",
+    "express": "^4.16.4",
+    "socket.io": "^2.2.0"
+  }
+}
