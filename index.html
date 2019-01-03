@@ -17,16 +17,8 @@
       const button = $("#button")
       button.click(() => {
           console.log("asking for results...")
-          socket.emit("stop all previous")
-          socket.emit("process this", {some: "data"})
-          c = 0
-          i = setInterval(() => {
-              c++
-              console.log(c)
-          }, 1000)
-          setTimeout(() => {
-              clearInterval(i)
-          }, 10000)
+          socket.emit("stop all previous")  // TODO
+          socket.emit("process this", { x1: 0, x2: 10, x3: 100 })
       })
       socket.on("ok got it", (estimation) => console.log(estimation))
       socket.on("process done", (result) => console.log(result))

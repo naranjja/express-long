@@ -1,6 +1,7 @@
 const app = require("express")()
 const http = require("http").Server(app)
 const io = require("socket.io")(http)
+const { PythonShell } = require('python-shell')
 
 app.get("/", (req, res) => {
     res.sendFile(__dirname + "/index.html")
@@ -16,13 +17,19 @@ io.on("connection", (socket) => {
             estimation: 10
         })
 
-        // TODO: process data for 10 seconds
-        setTimeout(() => {
+        const pyshell = new PythonShell('./main.py')
+
+        let results = []        
+        pyshell.on('message', (message) => {
+            results.push(message)
+        })
+
+        pyshell.end((err, code, signal) => {
+            if (err) throw err
             io.emit("process done", {
-                these: "are",
-                the: "results"
+                results
             })
-        }, 10000)
+          })
 
     })
     socket.on("disconnect", () => {
@@ -31,5 +38,5 @@ io.on("connection", (socket) => {
 })
 
 http.listen(3000, () => {
-    console.log("listening on *:3000")
+    console.log("Listening on port 3000")
 })
