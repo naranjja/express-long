@@ -17,11 +17,11 @@
       const button = $("#button")
       button.click(() => {
           console.log("asking for results...")
-          socket.emit("stop all previous")  // TODO
-          socket.emit("process this", { x1: 0, x2: 10, x3: 100 })
+          socket.emit("stop all previous")
+          socket.emit("process this", [0, 10, 100])
       })
-      socket.on("ok got it", (estimation) => console.log(estimation))
-      socket.on("process done", (result) => console.log(result))
+      socket.on("ok got it", (res) => console.log(res))
+      socket.on("process done", (res) => console.log(res.results))
   
   </script>
 </body>

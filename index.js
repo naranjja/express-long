@@ -8,32 +8,31 @@ app.get("/", (req, res) => {
 })
 
 io.on("connection", (socket) => {
-    console.log("a user connected")
-    socket.on("process this", (data) => {
+    
+    let pyshell = null
 
-        // TODO: estimate
-
-        io.emit("ok got it", {
-            estimation: 10
-        })
-
-        const pyshell = new PythonShell('./main.py')
-
-        let results = []        
-        pyshell.on('message', (message) => {
-            results.push(message)
-        })
-
-        pyshell.end((err, code, signal) => {
-            if (err) throw err
-            io.emit("process done", {
-                results
-            })
-          })
-
+    socket.on("stop all previous", () => {
+        if (pyshell) {
+            pyshell.terminate()
+        }
     })
-    socket.on("disconnect", () => {
-        console.log("user disconnected")
+    socket.on("process this", (data) => {
+                
+        let results = []
+        pyshell = new PythonShell('./main.py', { args: data })
+        pyshell.on('message', (message) => {
+            console.log(message)
+            if (results.length === 0) {
+                io.emit("ok got it", message)
+            } else {
+                results.push(message)
+            }
+        })
+        pyshell.end((err) => {
+            if (err) console.error(err)
+            io.emit("process done", { results })
+        })
+
     })
 })
 
