@@ -20,8 +20,8 @@
           socket.emit("stop all previous")
           socket.emit("process this", [0, 10, 100])
       })
-      socket.on("ok got it", (res) => console.log(res))
-      socket.on("process done", (res) => console.log(res.results))
+      socket.on("ok got it", (res) => console.log("res", res))
+      socket.on("process done", (res) => console.log("res.results", res.results))
   
   </script>
 </body>
